@@ -1,0 +1,124 @@
+<div>
+	<label style="font-weight: bold;">CallServlet.class:</label>
+	<br><br>
+	<label style="font-weight: bold;"><img src="/eSDK_UC_Demo_BS_Java/pic/description.jpg"></label>
+	<br><br>
+	<label style="font-weight: bold;">红色加粗部分代码为接口调用,其他颜色为模拟IDE开发工具中的色彩，便于阅读。</label>
+	<br><br>
+	<span style='color:#7F0055;font-weight:bold;'>package</span><span style='color:black;'> com.huawei.esdk.demo.servlet;</span>
+	<br><br>
+    <span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.io.IOException;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.io.PrintWriter;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.ServletException;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServlet;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServletRequest;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServletResponse;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> org.apache.log4j.Logger;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.google.gson.Gson;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.demo.factory.ServiceFactory;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.uc.professional.local.bean.UCSDKResponse;</span>
+	<br><br>
+	<span style='color:#3F5FBF;'>
+		/**<br>
+		 * CTD呼叫模块处理类<br> 
+		 * 发起CTD呼叫<br> 
+	 	 * <br> 
+	 	 * @author　xxxxxxxx<br> 
+	 	 * @see　[无]<br> 
+	 	 * @since　[eSDK UC V100R003C00]<br> 
+	 	 */</span><br> 
+	<span style='color:#7F0055;font-weight:bold;'>public class</span> CallServlet <span style='color:#7F0055;font-weight:bold;'>extends</span> HttpServlet<br> 
+	{<br> 
+	　　<span style='color:#3F5FBF;'>
+		/**<br> 
+	　　  * 序列号<br> 
+	　　  */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final long</span> <span style="color:#0000C0;font-style:italic;">serialVersionUID</span> = 6749720431926648350L;<br> 
+	　　<br> 
+	　　<span style='color:#3F5FBF;'>
+		/**<br> 
+	　　 * log日志对象<br> 
+	　　 */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final</span> Logger <span style="color:#0000C0;font-style:italic;">LOGGER</span> = Logger.getLogger(CallServlet.<span style='color:#7F0055;font-weight:bold;'>class</span>);<br> 
+	　　<br> 
+	　　<span style='color:#3F5FBF;'>
+		/**<br> 
+	　　 * gson，用于转换String和json之间的转换<br> 
+	　　 */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private</span> Gson <span style="color:#0000C0;">gson</span> = <span style='color:#7F0055;font-weight:bold;'>new</span> Gson();</span><br> 
+	　　<br> 
+	　　<br> 
+	　　<span style="color:#646464;">@Override</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>protected void</span> doPost(HttpServletRequest request, HttpServletResponse response)<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>throws</span> ServletException, IOException<br> 
+	　　{<br> 
+	　　　　doGet(request, response);<br> 
+	　　}<br> 
+	　　<br> 
+	　　<span style="color:#646464;">@Override</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>protected void</span> doGet(HttpServletRequest request, HttpServletResponse response)<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>throws</span> ServletException, IOException<br> 
+	　　{<br> 
+	　　　　<span style='color:#3F7F5F;'>// 获取需要调用的方法名</span><br> 
+	　　　　String methodName = request.getParameter(<span style="color:#0000C0;">"method"</span>);<br> 
+	　　　　String resp = <span style="color:#0000C0;">""</span>;<br> 
+	　　　　<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (<span style="color:#0000C0;">"dialCall"</span>.equals(methodName))<br> 
+	　　　　{<br> 
+	　　　　　　<span style='color:#3F7F5F;'>// 发起CTD呼叫</span><br> 
+	　　　　　　resp = dialCall(request);<br> 
+	　　　　}<br> 
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 输出流</span><br> 
+	　　　　PrintWriter pw = response.getWriter();<br> 
+	　　　　pw.print(resp);<br> 
+	　　　　pw.close();<br> 
+	　　}<br> 
+	　　<br> 
+		<span style='color:#3F5FBF;'>
+	　　/** <br> 
+	　　* 发起CTD呼叫<br> 
+	　　* <br> 
+	　　* @param request HttpServletRequest对象<br> 
+	　　* @return json格式的字符串<br> 
+	　　* @see [无]<br> 
+	　　* @since　[eSDK UC V100R003C00]<br> 
+	　　*/</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>public</span> String dialCall(HttpServletRequest request)<br> 
+	　　{<br> 
+	　　　　<span style='color:#3F7F5F;'>// 定义返回结果</span><br> 
+	　　　　String response = <span style='color:#7F0055;font-weight:bold;'>null</span>;<br> 
+	　　　　<br> 
+	　　　　<span style="color:#0000C0;font-style:italic;">LOGGER</span>.info(<span style="color:#0000C0;">"Begin to dialCall"</span>);<br> 
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 获取输入参数</span><br> 
+	　　　　String initiator = request.getParameter(<span style="color:#0000C0;">"initiator"</span>);<br> 
+	　　　　String caller = request.getParameter(<span style="color:#0000C0;">"caller"</span>);<br> 
+	　　　　String callee = request.getParameter(<span style="color:#0000C0;">"callee"</span>);<br> 
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 调用呼叫控制服务中的dialCall方法 </span><br> 
+	　　　　<font color="red" style="font-weight: bold;">UCSDKResponse&lt;String&gt; ucsdkResponse =<br> 
+	　　　　　　ServiceFactory.getCallServiceEx().dialCall(initiator, caller, callee);</font><br> 
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 根据接口返回数据生成JSON字符串，以便于页面展示</span><br> 
+	　　　　response = <span style="color:#0000C0;">gson</span>.toJson(ucsdkResponse);<br> 
+	　　　　<span style="color:#0000C0;font-style:italic;">LOGGER</span>.info(<span style="color:#0000C0;">"Finish to dialCall, response is : "</span> + response);<br> 
+	　　　　<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>return</span> response;<br> 
+	　　}<br> 
+	　　<br> 
+	}
+	<br><br>
+</div>

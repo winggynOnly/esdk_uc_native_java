@@ -1,0 +1,98 @@
+<div class="inoutput_param_div">
+	<table width="100%">
+		<tr>
+			<td width="10%">
+				<label id="inputParam" style="font-size:11pt;"></label>
+			</td>
+			<td></td>
+			<td width="32%"></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%"><font color='red'>* </font><label id="sendNumberLabel"></label>
+			</td>
+			<!--  
+			<td align="left"><input type="text" id="sendNumber"
+				name="sendNumber">
+			</td>
+			-->
+			<td align="left"><input type="text" id="sendNumber"
+				name="sendNumber" value="99999876" style="color:gray;" onfocus="textOnF(this); " onblur="textOnB(this);">
+			</td>
+			<td align="left"><span class="span_tip" id="sendNumberErrTip"></span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%"><font color='red'>* </font><label id="ucAccountLabel"></label>
+			</td>
+			<!--  
+			<td align="left"><input type="text" id="ucAccount"
+				name="ucAccount">
+			</td>
+			-->
+			<td align="left"><input type="text" id="ucAccount"
+				name="ucAccount" value="testAccont1" style="color:gray;" onfocus="textOnF(this); " onblur="textOnB(this);">
+			</td>
+			<td align="left"><span class="span_tip" id="ucAccountErrTip"></span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%" valign="top">
+				<font color='red'>* </font>
+				<label id="messageLabel"></label>
+			</td>
+			<!--  
+			<td align="left">
+				<textarea id="message" name="message"></textarea>
+			</td>
+			-->
+			<td align="left">
+				<textarea id="message" name="message" style="color:gray;height:100px;" onfocus="textOnF(this); " onblur="textOnB(this);">&lt;imbody&gt;&lt;content&gt;Hellow World!&lt;/content&gt;&lt;/imbody&gt;</textarea>
+			</td>
+			<td align="left" valign="top">
+				<!--  <span class="span_tip" id="messageErrTip">-->
+				<label id="messageAttention"></label>
+				<!-- </span> -->
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"></td>
+			<td align="left"><input class="btn_login" type="button"
+				id="appSendMsgToUCBtn" onclick="appSendMsgToUC();">
+			</td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+
+<div class="hr_horizontal_inoutputdiv">
+	<hr class="hr_horizontal_inoutput" noshade>
+</div>
+
+<div class="inoutput_param_div">
+	<table width="100%">
+		<tr>
+			<td width="10%"><label id="outputParam" style="font-size:11pt;"></label>
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="left" width="15%"><label id="resultCode"></label>
+			</td>
+			<td align="left"><input type="text" id="appSendMsgToUC_resultCode"
+				name="appSendMsgToUC_resultCode" readonly="readonly">
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="hr_horizontal_inoutputdiv">
+	<hr class="hr_horizontal_inoutput" noshade>
+</div>
+
+<div class="status_div">
+	<label id="appSendMsgToUC_status" style="color:red;"></label>
+</div>

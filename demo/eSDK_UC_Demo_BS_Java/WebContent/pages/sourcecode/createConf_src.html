@@ -1,0 +1,241 @@
+<div>
+	<label style="font-weight: bold;">ConferenceServlet.class:</label>
+	<br><br>
+	<label style="font-weight: bold;"><img src="/eSDK_UC_Demo_BS_Java/pic/description.jpg"></label>
+	<br><br>
+	<label style="font-weight: bold;">红色加粗部分代码为接口调用,其他颜色为模拟IDE开发工具中的色彩，便于阅读。</label>
+	<br><br>
+	<span style='color:#7F0055;font-weight:bold;'>package</span><span style='color:black;'> com.huawei.esdk.demo.servlet;</span>
+	<br><br>
+    <span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.io.IOException;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> java.io.PrintWriter;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.ServletException;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServlet;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServletRequest;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> javax.servlet.http.HttpServletResponse;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> org.apache.log4j.Logger;</span>
+	<br>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.google.gson.Gson;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.demo.factory.ServiceFactory;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.demo.utils.DateUtils;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.uc.professional.local.bean.ConfUser;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.uc.professional.local.bean.ConferenceInfo;</span>
+	<br>
+	<span style='color:#7F0055;font-weight:bold;'>import</span><span style='color:black;'> com.huawei.esdk.uc.professional.local.bean.UCSDKResponse;</span>
+	<br><br>
+	<span style='color:#3F5FBF;'>
+	 * 会议模块处理类<br> 
+	 * 发起会议接口<br> 
+	 * <br> 
+	 * @author　xxxxxxxx<br> 
+	 * @see　[无]<br> 
+	 * @since　[eSDK UC V100R003C00]<br> 
+	 */</span><br> 
+	<span style='color:#7F0055;font-weight:bold;'>public class</span> ConferenceServlet <span style='color:#7F0055;font-weight:bold;'>extends</span> HttpServlet<br> 
+	{<br>
+		<span style='color:#3F5FBF;'> 
+	　　/**<br> 
+	　　 * 序列号<br> 
+	　　 */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final long</span> <span style="color:#0000C0;font-style:italic;">serialVersionUID</span> = -1586272300179601609L;<br> 
+	　　<br>
+		<span style='color:#3F5FBF;'> 
+	　　/**<br> 
+	　　 * log日志对象<br> 
+	　　 */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>private static final</span> Logger <span style="color:#0000C0;font-style:italic;">LOGGER</span> = Logger.getLogger(ConferenceServlet.<span style='color:#7F0055;font-weight:bold;'>class</span>);<br> 
+	　　<br>
+		<span style='color:#3F5FBF;'> 
+	　　/**<br> 
+	　　 * gson，用于转换String和json之间的转换<br> 
+	　　 */</span><br> 
+	　　<br> 
+	　　<span style="color:#646464;">@Override</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>protected void</span> doPost(HttpServletRequest request, HttpServletResponse response)<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>throws</span> ServletException, IOException<br> 
+	　　{<br> 
+	　　　　doGet(request, response);<br> 
+	　　}<br> 
+	　　<br> 
+	　　<span style="color:#646464;">@Override</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>protected void</span> doGet(HttpServletRequest request, HttpServletResponse response)<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>throws</span> ServletException, IOException<br> 
+	　　{<br> 
+	　　　　<span style='color:#3F7F5F;'>// 获取需要调用的方法名</span><br> 
+	　　　　String methodName = request.getParameter(<span style="color:#0000C0;">"method"</span>);<br> 
+	　　　　String resp = <span style="color:#0000C0;">""</span>;<br> 
+	　　　　<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (<span style="color:#0000C0;">"createConf"</span>.equals(methodName))<br> 
+	　　　　{<br> 
+	　　　　　　<span style='color:#3F7F5F;'>// 发起会议</span><br> 
+	　　　　　　resp = createConf(request);<br> 
+	　　　　}<br> 
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 输出流</span><br> 
+	　　　　PrintWriter pw = response.getWriter();<br> 
+	　　　　pw.print(resp);<br> 
+	　　　　pw.close();<br> 
+	　　}<br> 
+	　　<br>
+		<span style='color:#3F5FBF;'> 
+	　　/** <br> 
+	　　 * 发起会议<br> 
+	　　 * <br> 
+	　　 * @param request HttpServletRequest对象<br> 
+	　　 * @return json格式的字符串<br> 
+	　　 * @see [无]<br> 
+	　　 * @since　[eSDK UC V100R003C00]<br> 
+	　　 */</span><br> 
+	　　<span style='color:#7F0055;font-weight:bold;'>public</span> String createConf(HttpServletRequest request)<br> 
+	　　{<br> 
+	　　　　<span style='color:#3F7F5F;'>// 定义返回结果</span><br> 
+	　　　　String response = <span style='color:#7F0055;font-weight:bold;'>null</span>;<br> 
+	　　　　<br> 
+	　　　　<br> 
+	　　　　<span style="color:#0000C0;font-style:italic;">LOGGER</span>.info(<span style="color:#0000C0;">"Begin to getDeviceList"</span>);<br> 
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 获取页面参数</span><br> 
+	　　　　ConferenceInfo confInfo = new ConferenceInfo();<br>
+	　　　　String confType = request.getParameter(<span style="color:#0000C0;">"confType"</span>));<br>
+	　　　　confInfo.setConfType(confType);<br>
+	　　　　confInfo.setSubject(request.getParameter(<span style="color:#0000C0;">"subject"</span>));<br> 
+	　　　　confInfo.setInitiator(request.getParameter(<span style="color:#0000C0;">"initiator"</span>));<br> 
+	        
+	　　　　String beginTimeStr = request.getParameter(<span style="color:#0000C0;">"beginTime"</span>);<br>
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (!StringUtils.isEmpty(beginTimeStr) && !"1".equals(confType) && !"3".equals(confType))<br>
+	　　　　{<br>
+	　　　　　　Date beginTime = DateUtils.stringToDate(beginTimeStr, "yyyy/MM/dd HH:mm");<br>
+	　　　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (null != beginTime)<br>
+	　　　　　　{<br>
+	　　　　		　　　confInfo.setBeginTime(beginTime);<br>
+	　　　　　　}<br>
+	　　　　}<br>
+	　　　　String endTimeStr = request.getParameter(<span style="color:#0000C0;">"endTime"</span>);<br>
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (!StringUtils.isEmpty(endTimeStr) && !"1".equals(confType) && !"3".equals(confType))<br>
+	　　　　{<br>
+	　　　　　　Date endTime = DateUtils.stringToDate(endTimeStr, "yyyy/MM/dd HH:mm");<br>
+	　　　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (<span style='color:#7F0055;font-weight:bold;'>null</span> != endTime)<br>
+	　　　　　　{<br>
+	　　　　		　　　confInfo.setEndTime(endTime);<br>
+	　　　　　　}<br>
+	　　　　}<br>
+	　　　　<span style='color:#3F7F5F;'>//填写会议主席信息 </span><br>
+	　　　　ConfUser chairman = new ConfUser();<br> 
+	　　　　chairman.setNumber(request.getParameter(<span style="color:#0000C0;">"chairmanNumber"</span>));<br> 
+	　　　　chairman.setName(request.getParameter(<span style="color:#0000C0;">"chairmanName"</span>));<br> 
+	　　　　chairman.setAccount(request.getParameter(<span style="color:#0000C0;">"chairmanAccount"</span>));<br> 
+	　　　　chairman.setTalkMode(Integer.parseInt(request.getParameter(<span style="color:#0000C0;">"chairmanTalkMode"</span>)));<br> 
+	　　　　chairman.setStatus(Integer.parseInt(request.getParameter(<span style="color:#0000C0;">"chairmanStatus"</span>)));<br> 
+	　　　　chairman.setIsSupportVideo(Integer.parseInt(request.getParameter(<span style="color:#0000C0;">"chairmanSupportVideo"</span>)));<br> 
+	　　　　chairman.setRole(Integer.parseInt(request.getParameter("<span style="color:#0000C0;">chairmanRole"</span>)));<br> 
+	　　　　String chairmanEmail = request.getParameter(<span style="color:#0000C0;">"chairmanEmail"</span>);<br>
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (!StringUtils.isEmpty(chairmanEmail))<br>
+	　　　　{<br>
+	　　　　　　chairman.setEmail(chairmanEmail);<br> 
+	　　　　}<br>
+	　　　　confInfo.setChairman(chairman);<br> 
+	        
+	　　　　<span style='color:#3F7F5F;'>// 会议成员列表</span><br>
+	　　　　String[] confUserNumbers = request.getParameter(<span style="color:#0000C0;">"confUserNumber"</span>).split(",");<br>
+	　　　　String[] confUserNames = request.getParameter(<span style="color:#0000C0;">"confUserName"</span>).split(",");<br>
+	　　　　String[] confUserAccounts = request.getParameter(<span style="color:#0000C0;">"confUserAccount"</span>).split(",");<br>
+	　　　　String[] confUserTalkModes = request.getParameter(<span style="color:#0000C0;">"confUserTalkMode"</span>).split(",");<br>
+	　　　　String[] confUserStatus = request.getParameter(<span style="color:#0000C0;">"confUserStatus"</span>).split(",");<br>
+	　　　　String[] confUserSupportVideos = request.getParameter(<span style="color:#0000C0;">"confUserSupportVideo"</span>).split(",");<br>
+	　　　　String[] confUserRoles = request.getParameter(<span style="color:#0000C0;">"confUserRole"</span>).split(",");<br>
+	　　　　String[] confUserEmails = request.getParameter(<span style="color:#0000C0;">"confUserEmail"</span>).split(",");<br>
+	        
+	　　　　List&lt;ConfUser&gt; confUsers = new ArrayList&lt;ConfUser&gt;();<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (<span style='color:#7F0055;font-weight:bold;'>null</span> != confUserNumbers && 0 < confUserNumbers.length)<br>
+	　　　　{<br>
+	　　　　　　for (int i = 0; i< confUserNumbers.length; i++)<br>
+	　　　　　　{<br>
+	　　　　		　　　ConfUser confUser = new ConfUser();<br>
+	　　　　		　　　confUser.setNumber(confUserNumbers[i]);<br> 
+	                
+	　　　　		　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (<span style='color:#7F0055;font-weight:bold;'>null</span> != confUserNames && confUserNames.length > i)<br>
+	　　　　		　　　{<br>
+	　　　　		　　　　　　String confUserName = confUserNames[i];<br>
+	　　　　		　　　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (!StringUtils.isEmpty(confUserName))<br>
+	　　　　		　　　　　　{<br>
+	　　　　		　　　　　　　　confUser.setName(confUserName);<br> 
+	　　　　		　　　　　　}<br>
+	　　　　		　　　}<br>
+	                
+	　　　　		　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (<span style='color:#7F0055;font-weight:bold;'>null</span> != confUserAccounts && confUserAccounts.length > i)<br>
+	　　　　		　　　{<br>
+	　　　　		　　　　　　String confUserAccount = confUserAccounts[i];<br>
+	　　　　		　　　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (!StringUtils.isEmpty(confUserAccount))<br>
+	　　　　		　　　　　　{<br>
+	　　　　		　　　　　　　　confUser.setAccount(confUserAccount);<br> 
+	　　　　		　　　　　　}<br>
+	　　　　		　　　}<br>
+	                
+	　　　　		　　　confUser.setTalkMode(Integer.parseInt(confUserTalkModes[i]));<br> 
+	　　　　		　　　confUser.setStatus(Integer.parseInt(confUserStatus[i]));<br> 
+	　　　　		　　　confUser.setIsSupportVideo(Integer.parseInt(confUserSupportVideos[i]));<br> 
+	　　　　		　　　confUser.setRole(Integer.parseInt(confUserRoles[i]));<br>
+	                
+	　　　　		　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (<span style='color:#7F0055;font-weight:bold;'>null</span> != confUserEmails && confUserEmails.length > i)<br>
+	　　　　		　　　{<br>
+	　　　　		　　　　　　String confUserEmail = confUserEmails[i];<br>
+	　　　　		　　　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (!StringUtils.isEmpty(confUserEmail))<br>
+	　　　　		　　　　　　{<br>
+	　　　　		　　　　　　　　confUser.setEmail(confUserEmail);<br>
+	　　　　		　　　　　　}<br>
+	　　　　		　　　}<br>
+	                
+	　　　　		　　　confUsers.add(confUser);<br>
+	　　　　　　}<br>
+	　　　　}<br>
+	　　　　confInfo.setConfUser(confUsers);<br> 
+	         
+	
+	　　　　<span style='color:#3F7F5F;'>// 目前仅支持100和111</span><br>
+	　　　　confInfo.setMediaType(request.getParameter(<span style="color:#0000C0;">"mediaType"</span>));<br>
+	        
+	　　　　<span style='color:#3F7F5F;'>// 会议主席密码</span><br>
+	　　　　String chairmanPassword = request.getParameter(<span style="color:#0000C0;">"chairmanPassword"</span>);<br>
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (!StringUtils.isEmpty(chairmanPassword))<br>
+	　　　　{<br>
+	　　　　　　chairman.setEmail(chairmanPassword);<br> 
+	　　　　}<br>
+	        
+	　　　　<span style='color:#3F7F5F;'>// 普通成员会议密码</span><br>
+	　　　　String memberPassword = request.getParameter(<span style="color:#0000C0;">"memberPassword"</span>);<br>
+	　　　　<span style='color:#7F0055;font-weight:bold;'>if</span> (!StringUtils.isEmpty(memberPassword))<br>
+	　　　　{<br>
+	　　　　　　chairman.setEmail(memberPassword);<br>
+	　　　　}<br>
+	        
+	　　　　<span style='color:#3F7F5F;'>//最大与会者人数为10人 </span><br>
+	　　　　confInfo.setMaxAttendee(Integer.parseInt(request.getParameter(<span style="color:#0000C0;">"maxAttendee"</span>)));<br>
+	　　　　<br> 
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 调用发起会议接口</span><br> 
+	　　　　<font color="red" style="font-weight: bold;">UCSDKResponse<String> createConfResponse =<br> 
+	　　　　　　ServiceFactory.getConferenceServiceEx().createConf(confInfo);</font><br> 
+	　　　　<br> 
+	　　　　<span style='color:#3F7F5F;'>// 根据接口返回数据生成JSON字符串，以便于页面展示</span><br> 
+	　　　　response = <span style="color:#0000C0;">gson</span>.toJson(createConfResponse);<br> 
+	　　　　<span style="color:#0000C0;font-style:italic;">LOGGER</span>.info(<span style="color:#0000C0;">"Finish to getDeviceList, response is : "</span> + response);<br> 
+	　　　　<br> 
+	　　　　<br> 
+	　　　　<span style='color:#7F0055;font-weight:bold;'>return</span> response;<br> 
+	　　}<br> 
+	}
+	<br><br>
+</div>

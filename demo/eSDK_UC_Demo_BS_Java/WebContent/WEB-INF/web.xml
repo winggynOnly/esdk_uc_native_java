@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>eSDK_UC_Demo_BS_Java</display-name>
+  <welcome-file-list>
+    <welcome-file>pages/index.html</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>serviceFactory</servlet-name>
+    <servlet-class>com.huawei.esdk.demo.factory.ServiceFactory</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>serviceFactory</servlet-name>
+    <url-pattern>/serviceFactory</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>callServlet</servlet-name>
+    <servlet-class>com.huawei.esdk.demo.servlet.CallServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>callServlet</servlet-name>
+    <url-pattern>/callServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>conferenceServlet</servlet-name>
+    <servlet-class>com.huawei.esdk.demo.servlet.ConferenceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>conferenceServlet</servlet-name>
+    <url-pattern>/conferenceServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>imServlet</servlet-name>
+    <servlet-class>com.huawei.esdk.demo.servlet.IMServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>imServlet</servlet-name>
+    <url-pattern>/imServlet</url-pattern>
+  </servlet-mapping>
+  <!-- 20140415  增 -->
+  <servlet>
+    <servlet-name>base64Servlet</servlet-name>
+    <servlet-class>com.huawei.esdk.demo.servlet.Base64Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>base64Servlet</servlet-name>
+    <url-pattern>/base64Servlet</url-pattern>
+  </servlet-mapping>
+</web-app>

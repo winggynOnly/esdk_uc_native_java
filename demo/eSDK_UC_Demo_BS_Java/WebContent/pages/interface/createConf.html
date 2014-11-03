@@ -1,0 +1,441 @@
+<ul class="block">
+	<li>
+		<div id="createConf_desc" class="description_div">
+			<!-- append description -->
+		</div>
+	</li>
+</ul>
+<ul>
+	<li>
+		<div id="createConf_execution">
+			<!-- append source code -->
+		</div>
+	</li>
+</ul>
+<ul>
+	<li>
+		<div id="createConf_src" class="sourcecode_div">
+			<!-- append source code -->
+		</div>
+	</li>
+</ul>
+
+<script type="text/javascript">
+	var confUserTr = 0;
+	$(document).ready(function(){
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : "/eSDK_UC_Demo_BS_Java/pages/description/createConf_desc.html",
+			async : false,
+			success : function(data) {
+				$("#createConf_desc").html(data);
+			}
+		});
+		
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : "/eSDK_UC_Demo_BS_Java/pages/execution/createConf_execution.html",
+			async : false,
+			success : function(data) {
+				$("#createConf_execution").html(data);
+			}
+		});
+		
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : "/eSDK_UC_Demo_BS_Java/pages/sourcecode/createConf_src.html",
+			async : false,
+			success : function(data) {
+				$("#createConf_src").html(data);
+			}
+		});
+		$( "#beginTime" ).datepicker({
+			dateFormat: 'yy/mm/dd',
+	        changeYear: true,
+	        minDate: 0,
+	        onClose: function( selectedDate ) {
+				$( "#endTime" ).datepicker( "option", "minDate", selectedDate );
+			}
+		});
+		$( "#endTime" ).datepicker({
+			dateFormat: 'yy/mm/dd',
+	        changeYear: true,
+	        minDate: 0,
+	        onClose: function( selectedDate ) {
+				$( "#beginTime" ).datepicker( "option", "maxDate", selectedDate );
+			}
+		});
+		
+	});
+	
+	function addConfUserParam()
+	{
+		lang = $("#changeLang").val();
+		
+		if (lang == "en-us")
+		{
+			controller = new LanguageControllerEN();
+		}
+		else
+		{
+			controller = new LanguageControllerZH();
+		}
+		var tr = "<tr id='confUserTr"+confUserTr+"'>";
+		tr += "<td>";
+	    /*tr += "<input type=\"text\" name=\"confUserNumber\" class=\"shortInput\">";*/
+	    tr += "<input type=\"text\" name=\"confUserNumber\" class=\"shortInput\" id=\"confUserNumber\" value=\"244244\" onfocus=\"textOnF(this);\" onblur=\"textOnB(this);\">";
+		tr += "</td>";
+		tr += "<td>";
+		/*tr += "<input type=\"text\" name=\"confUserName\" class=\"shortInput\">";*/
+		tr += "<input type=\"text\" name=\"confUserName\" class=\"shortInput\" id=\"confUserName\" value=\"zl03\" onfocus=\"textOnF(this);\" onblur=\"textOnB(this);\">";
+		tr += "</td>";
+		tr += "<td>";
+		/*tr += "<input type=\"text\" name=\"confUserAccount\" class=\"shortInput\">";*/
+		tr += "<input type=\"text\" name=\"confUserAccount\" class=\"shortInput\" id=\"confUserAccount\" value=\"UC:zl03\" onfocus=\"textOnF(this);\" onblur=\"textOnB(this);\">";
+		tr += "</td>";
+		tr += "<td>";
+		tr += "<select name=\"confUserTalkMode\" class=\"shortInput\">";
+		tr += "<option value=\"0\" selected>"+controller.language.titles["TalkMode0"]+"</option>";
+		tr += "<option value=\"1\">"+controller.language.titles["TalkMode1"]+"</option>";
+		tr += "<option value=\"2\">"+controller.language.titles["TalkMode2"]+"</option>";
+		tr += "</select>";
+		tr += "</td>";
+		tr += "<td>";
+		tr += "<select name=\"confUserStatus\" class=\"shortInput\">";
+		tr += "<option value=\"1\" selected>"+controller.language.titles["statusOption1"]+"</option>";
+		tr += "<option value=\"2\">"+controller.language.titles["statusOption2"]+"</option>";
+		tr += "<option value=\"3\">"+controller.language.titles["statusOption3"]+"</option>";
+		tr += "<option value=\"4\">"+controller.language.titles["statusOption4"]+"</option>";
+		tr += "</select>";
+		tr += "</td>";
+		tr += "<td>";
+		tr += "<select name=\"confUserSupportVideo\" class=\"shortInput\">";
+		tr += "<option value=\"0\" selected>"+controller.language.titles["supportVideoOption0"]+"</option>";
+		tr += "<option value=\"1\">"+controller.language.titles["supportVideoOption1"]+"</option>";
+		tr += "</select";
+		tr += "</td>";
+		tr += "<td>";
+		tr += "<select name=\"confUserRole\" class=\"shortInput\">";
+		tr += "<option value=\"1\">"+controller.language.titles["roleOption1"]+"</option>";
+		tr += "<option value=\"2\" selected>"+controller.language.titles["roleOption2"]+"</option>";
+		tr += "</select";
+		tr += "</td>";
+		tr += "<td>";
+		tr += "<input type=\"text\" name=\"confUserEmail\" class=\"shortInput\">";
+		tr += "</td>";
+		tr += "<td style=\"width:40px\" align='center'>";
+		tr += "<img style=\"width:20px; height:20px; cursor: pointer;\" onclick=\"delConfUserTr('confUserTr" + confUserTr + "');\" src=\"/eSDK_UC_Demo_BS_Java/pic/del2.jpg\">";
+		tr += "</td>";
+		tr += "</tr>";
+		$("#confUserTable").append(tr);
+		confUserTr++;
+	}
+
+	function createConf()
+	{
+		
+		$("#createConf_resultCode").val("");
+		$("#confId").val("");
+		$("#confUserNumberErrTip").html("");
+		$("#subjectErrTip").html("");
+		$("#initiatorErrTip").html("");
+		$("#chairmanNumberErrTip").html("");
+		$("#maxAttendeeErrTip").html("");
+		$("#chairmanEmailErrTip").html("");
+		$("#confBeginTimeErrTip").html("");
+		$("#confEndTimeErrTip").html("");
+		
+		// 简单参数校验
+		/**
+		if (isEmpty($("#subject").val()))
+		{
+			$("#subjectErrTip").html(controller.language.titles["subjectErrTip"]);
+			return false;
+		}
+		if (isEmpty($("#initiator").val()))
+		{
+			$("#initiatorErrTip").html(controller.language.titles["initiatorErrTip"]);
+			return false;
+		}*/
+		if ('2'==$("#confType").val() || '4'==$("#confType").val())
+		{
+			var beginTime = $("#beginTime").val();
+			var beginHour = $("#beginHour").val();
+			var beginMin = $("#beginMin").val();
+			/* 应该在下面的  if 语句中 isEmpty(beginTime) || isEmpty(beginHour) || isEmpty(beginMin)|| */
+			if ((!isNumber(beginHour)) || (!isNumber(beginMin))
+					|| beginHour<0 || beginHour>23 || beginMin<0 || beginMin>59)
+			{
+				$("#confBeginTimeErrTip").html(controller.language.titles["confBeginTimeErrTip"]);
+				return false;
+			}
+			var endTime = $("#endTime").val();
+			var endHour = $("#endHour").val();
+			var endMin = $("#endMin").val();
+			/*isEmpty(endTime) || isEmpty(endHour) || isEmpty(endMin)||*/
+			if (!isNumber(endHour) || !isNumber(endMin)
+					|| endHour<0 || endHour>23 || endMin<0 || endMin>59)
+			{
+				$("#confEndTimeErrTip").html(controller.language.titles["confEndTimeErrTip"]);
+				return false;
+			}
+		}
+		
+		/*if (isEmpty($("#chairmanNumber").val()))
+		{
+			$("#chairmanNumberErrTip").html(controller.language.titles["chairmanNumberErrTip"]);
+			return false;
+		}*/
+		if (!isEmpty($("#chairmanEmail").val()))
+		{
+			if (!isEmail($("#chairmanEmail").val()))
+			{
+				$("#chairmanEmailErrTip").html(controller.language.titles["chairmanEmailErrTip"]);
+				return false;
+			}
+		}
+		/*
+		if (isEmpty($("#maxAttendee").val()))
+		{
+			$("#maxAttendeeErrTip").html(controller.language.titles["maxAttendeeNullErrTip"]);
+			return false;
+		}*/
+		if (!isNumber($("#maxAttendee").val()))
+		{
+			$("#maxAttendeeErrTip").html(controller.language.titles["maxAttendeeErrTip"]);
+			return false;
+		}
+		var length = $("input[name='confUserNumber']").length - 1;
+		var confUserNumber = '';
+		var confUserNumberNull = false;
+		$.each($("input[name='confUserNumber']"),function(i,val){
+			
+			/*
+			if (isEmpty(val.value))
+			{
+				$("#confUserNumberErrTip").html(controller.language.titles["confUserNumberErrTip"]);
+				confUserNumberNull = true;
+				return false;
+			}*/
+			confUserNumber += val.value;
+			if (i < length)
+			{
+				confUserNumber += ',';
+			}
+		});
+		if (confUserNumberNull)
+		{
+			return false;
+		}
+		var confUserName = '';
+		$.each($("input[name='confUserName']"),function(i,val){
+			confUserName += val.value;
+			if (i < length)
+			{
+				confUserName += ',';
+			}
+		});
+		var confUserAccount = '';
+		$.each($("input[name='confUserAccount']"),function(i,val){
+			confUserAccount += val.value;
+			if (i < length)
+			{
+				confUserAccount += ',';
+			}
+		});
+		var confUserTalkMode = '';
+		$.each($("select[name='confUserTalkMode']"),function(i,val){
+			confUserTalkMode += val.value;
+			if (i < length)
+			{
+				confUserTalkMode += ',';
+			}
+		});
+		var confUserStatus = '';
+		$.each($("select[name='confUserStatus']"),function(i,val){
+			confUserStatus += val.value;
+			if (i < length)
+			{
+				confUserStatus += ',';
+			}
+		});
+		var confUserSupportVideo = '';
+		$.each($("select[name='confUserSupportVideo']"),function(i,val){
+			confUserSupportVideo += val.value;
+			if (i < length)
+			{
+				confUserSupportVideo += ',';
+			}
+		});
+		var confUserRole = '';
+		$.each($("select[name='confUserRole']"),function(i,val){
+			confUserRole += val.value;
+			if (i < length)
+			{
+				confUserRole += ',';
+			}
+		});
+		var confUserEmail = '';
+		var confUserEmailErr = false;
+		$.each($("input[name='confUserEmail']"),function(i,val){
+			if (!isEmpty(val.value))
+			{
+				if (!isEmail(val.value))
+				{
+					$("#confUserNumberErrTip").html(controller.language.titles["confUserEmailErrTip"]);
+					confUserEmailErr = true;
+					return false;
+				}
+			}
+			confUserEmail += val.value;
+			if (i < length)
+			{
+				confUserEmail += ',';
+			}
+		});
+		if (confUserEmailErr)
+		{
+			return false;
+		}
+		var mediaType='';
+		$.each($("input[name='mediaType']"),function(i,val){
+			if ($(this).attr('checked')=='checked')
+			{
+				mediaType += '1';
+			} 
+			else
+			{
+				mediaType += '0';
+			}
+			
+		});
+		
+		parent.tb_remove();
+		
+		$.ajax({
+			url : "/eSDK_UC_Demo_BS_Java/conferenceServlet",
+			type : "post",
+			data : 
+			{
+				method : $("#method").val(),
+				confType : $("#confType").val(),
+				subject : $("#subject").val(),
+				initiator : $("#initiator").val(),
+				beginTime : $("#beginTime").val() + ' ' + ($("#beginHour").val()==''?'00':$("#beginHour").val()) + ':' + ($("#beginMin").val()==''?'00':$("#beginMin").val()),
+				endTime : $("#endTime").val() + ' ' + ($("#endHour").val()==''?'00':$("#endHour").val()) + ':' + ($("#endMin").val()==''?'00':$("#endMin").val()),
+				chairmanNumber : $("#chairmanNumber").val(),
+				chairmanName : $("#chairmanName").val(),
+				chairmanAccount : $("#chairmanAccount").val(),
+				chairmanTalkMode : $("select[name=chairmanTalkMode]").val(),
+				chairmanStatus : $("select[name=chairmanStatus]").val(),
+				chairmanSupportVideo : $("select[name=chairmanSupportVideo]").val(),
+				chairmanRole : $("select[name=chairmanRole]").val(),
+				chairmanEmail : $("#chairmanEmail").val(),
+				mediaType : mediaType,
+				chairmanPassword : $("#chairmanPassword").val(),
+				memberPassword : $("#memberPassword").val(),
+				memberPassword : $("#memberPassword").val(),
+				maxAttendee : $("#maxAttendee").val(),
+				confUserNumber : confUserNumber,
+				confUserName : confUserName,
+				confUserAccount : confUserAccount,
+				confUserTalkMode : confUserTalkMode,
+				confUserStatus : confUserStatus,
+				confUserSupportVideo : confUserSupportVideo,
+				confUserRole : confUserRole,
+				confUserEmail : confUserEmail
+			},
+			dataType : "json",
+			async : false,
+			success : function(data)
+			{
+				// 登录登出异常
+				if (null == data.a)
+				{
+					$("#createConf_resultCode").val(data.resultCode);
+					$("#createConf_status").html(controller.language.titles["operationFailed"]);
+				}
+				else
+				{
+					$("#createConf_resultCode").val(data.a);
+					$("#confId").val(data.b);
+					if (0 == data.a)
+					{
+						$("#createConf_status").html(controller.language.titles["operationSuccess"]);
+					}
+					else
+					{
+						$("#createConf_status").html(controller.language.titles["operationFailed"]);
+					}
+				}
+			},
+			error : function(data)
+			{
+				var res = data.responseText;
+				$("#createConf_resultCode").val(res);
+				$("#confId").val("");
+				$("#createConf_status").html(controller.language.titles["operationFailed"]);
+			},
+			beforeSend : function()
+			{
+				$("#createConf_resultCode").val("");
+				$("#confId").val("");
+			}
+		});
+	}
+	
+	function isEmail(str)
+	{
+		var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+		return reg.test(str);
+	}
+	
+	function delConfUserTr(str)
+	{
+		$('#'+str).remove();
+	}
+	
+	function confTime()
+	{
+		var confType = $("#confType").val();
+		if ('1'==confType || '3'==confType)
+		{
+			$('#confBeginTimeTr').css("display","none");
+			$('#confEndTimeTr').css("display","none");
+		}
+		else
+		{
+			$('#confBeginTimeTr').show();
+			$('#confEndTimeTr').show();
+		}
+	}
+	
+	function changeMediaType(str)
+	{
+		if (str=='2')
+		{
+			if ($("#mediaTypeVideo").attr('checked')=='checked')
+			{
+				$("#mediaTypeData").attr('checked','checked');
+			}
+			else
+			{
+				$("#mediaTypeData").attr('checked',false);
+			}
+		}
+		else if (str=='3')
+		{
+			if ($("#mediaTypeData").attr('checked')=='checked')
+			{
+				$("#mediaTypeVideo").attr('checked','checked');
+			}
+			else
+			{
+				$("#mediaTypeVideo").attr('checked',false);
+			}
+		}
+	}
+</script>

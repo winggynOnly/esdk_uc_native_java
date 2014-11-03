@@ -1,0 +1,131 @@
+<ul class="block">
+	<li>
+		<div id="dialCall_desc" class="description_div">
+			<!-- append description -->
+		</div>
+	</li>
+</ul>
+<ul>
+	<li>
+		<div id="dialCall_execution">
+			<!-- append execution code -->
+		</div>
+	</li>
+</ul>
+<ul>
+	<li>
+		<div id="dialCall_src" class="sourcecode_div">
+			<!-- append source code -->
+		</div>
+	</li>
+</ul>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : "/eSDK_UC_Demo_BS_Java/pages/description/dialCall_desc.html",
+			async : false,
+			success : function(data) {
+				$("#dialCall_desc").html(data);
+			}
+		});
+		
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : "/eSDK_UC_Demo_BS_Java/pages/execution/dialCall_execution.html",
+			async : false,
+			success : function(data) {
+				$("#dialCall_execution").html(data);
+			}
+		});
+		
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : "/eSDK_UC_Demo_BS_Java/pages/sourcecode/dialCall_src.html",
+			async : false,
+			success : function(data) {
+				$("#dialCall_src").html(data);
+			}
+		});
+	});
+
+	function dialCall()
+	{
+		// 清空信息
+		$("#dialCall_resultCode").val("");
+		$("#callId").html("");
+		$("#initiatorErrTip").html("");
+		$("#callerErrTip").html("");
+		$("#calleeErrTip").html("");
+		$("#dialCall_status").html("");
+		
+		var initiator = $("#initiator").val();
+		var caller = $("#caller").val();
+		var callee = $("#callee").val();
+		
+		// 简单参数校验(因为加入了默认参考数据，所以不需要非空校验，20140418注释)
+/**		if (isEmpty(initiator))
+		{
+			$("#initiatorErrTip").html(controller.language.titles["initiatorNull"]);
+			return false;
+		}
+		
+		if (isEmpty(caller))
+		{
+			$("#callerErrTip").html(controller.language.titles["callerNull"]);
+			return false;
+		}
+		
+		if (isEmpty(callee))
+		{
+			$("#calleeErrTip").html(controller.language.titles["calleeNull"]);
+			return false;
+		}
+		*/
+		$.ajax({
+			url : "/eSDK_UC_Demo_BS_Java/callServlet",
+			type : "post",
+			dataType : "json",
+			data : {initiator:initiator,caller:caller,callee:callee,method:"dialCall"},
+			async : false,
+			success : function(data)
+			{
+				if (null == data.a)
+				{
+					$("#dialCall_resultCode").val(data.resultCode);
+					$("#dialCall_status").html(controller.language.titles["operationFailed"]);
+				}
+				else
+				{
+					$("#dialCall_resultCode").val(data.a);			
+					$("#callId").val(data.b);
+					if (0 == data.a)
+					{
+						$("#dialCall_status").html(controller.language.titles["operationSuccess"]);
+					}
+					else
+					{
+						$("#dialCall_status").html(controller.language.titles["operationFailed"]);
+					}
+				}
+				
+			},
+			error : function(data)
+			{
+				var res = data.responseText;
+				$("#dialCall_resultCode").val("res");
+				$("#callId").val("");
+				$("#dialCall_status").html(controller.language.titles["operationFailed"]);
+			},
+			beforeSend : function()
+			{
+				$("#dialCall_resultCode").val("");
+				$("#callId").val("");
+			}
+		});
+	}
+</script>

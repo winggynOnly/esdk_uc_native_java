@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//WebContent/css/demo.css=UTF-8
+encoding//WebContent/js/demotools.js=UTF-8
+encoding//WebContent/js/en-us.js=UTF-8
+encoding//WebContent/js/jquery.ui.datepicker-zh-TW.js=UTF-8
+encoding//WebContent/js/zh-cn.js=UTF-8
+encoding//WebContent/pages/description/appSendMsgToUC_desc.html=UTF-8
+encoding//WebContent/pages/description/createConf_desc.html=UTF-8
+encoding//WebContent/pages/description/dialCall_desc.html=UTF-8
+encoding//src/com/huawei/esdk/demo/factory/ServiceFactory.java=UTF-8
+encoding//src/com/huawei/esdk/demo/servlet/Base64Servlet.java=UTF-8
+encoding//src/com/huawei/esdk/demo/servlet/CallServlet.java=UTF-8
+encoding//src/com/huawei/esdk/demo/servlet/ConferenceServlet.java=UTF-8
+encoding//src/com/huawei/esdk/demo/servlet/IMServlet.java=UTF-8
+encoding//src/com/huawei/esdk/demo/utils/DateUtils.java=UTF-8
+encoding//src/com/huawei/esdk/demo/utils/PropertiesUtils.java=UTF-8
+encoding//src/com/huawei/esdk/demo/utils/StringUtils.java=UTF-8

@@ -1,0 +1,66 @@
+<html>
+  <head>
+
+  </head>
+  <body style="width:100%;">
+<div id="getalarmeventinfo_desc">
+<p style="font-weight: bold;" id="getAlarmEventInfoDesc">dialCall接口用于在主叫和被叫之间发起CTD呼叫。主叫方和被叫方的号码可以是UC号码、手机号码或固定号码。
+</p>
+<div class="description_input_div">
+	<p style="font-weight: bold;" id="inputParameterDesc">输入参数描述:</p>
+	<table border="1"  style="width:100%;border-collapse: collapse;">
+		<tbody><tr style="background-color: #E7E7E7;">
+			<td width="25%"><p id="inputParameterTd">参数</p></td>
+			<td width="18%"><p id="inputTypeTd">类型</p></td>
+			<td width="18%"><p id="inputRestrictionTd">约束</p></td>
+			<td><p id="inputDescriptionTd">描述</p></td>
+		</tr>
+		<tr>
+			<td>initiator</td>
+			<td>String</td>
+			<td>1</td>
+			<td><p id="alarmEventIdInputTd"> 呼叫发起人的UC账号或应用账号：
+UC账号：格式为UC:UC帐号，如UC:j00213891
+应用账号：格式为APP:appid，如APP:000011112512（暂不支持）
+ </p></td>
+		</tr>
+		<tr>
+			<td>caller</td>
+			<td>String</td>
+			<td>1</td>
+			<td><p id="alarmInCodeInputTd">主叫号码</p></td>
+		</tr>
+		<tr>
+			<td>callee</td>
+			<td>String</td>
+			<td>1</td>
+			<td><p id="alarmInCodeInputTd">被叫号码</p></td>
+		</tr>
+	</tbody></table>
+</div>
+<div class="description_output_div">
+	<p style="font-weight: bold;" id="outputParameterDesc">返回参数描述:</p>
+	<table border="1"  style="width:100%;">
+		<tbody><tr style="background-color: #E7E7E7;">
+			<td width="25%"><p id="outputParameterTd">参数</p></td>
+			<td width="18%"><p id="outputTypeTd">类型</p></td>
+			<td width="18%"><p id="outputRestrictionTd">约束</p></td>
+			<td><p id="outputDescriptionTd">描述</p></td>
+		</tr>
+		<tr>
+			<td>resultCode</td>
+			<td>int</td>
+			<td>1</td>
+			<td><p id="resultCodeTd">成功返回0，失败返回错误码</p></td>
+		</tr>
+		<tr>
+			<td>callId</td>
+			<td>String</td>
+			<td>1</td>
+			<td><p id="alarmEventInfoOutputTd">resultCode为0时，返回呼叫标识。</p></td>
+		</tr>
+	</tbody></table>
+</div>
+</div>
+</body>
+</html>

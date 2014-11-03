@@ -1,0 +1,412 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+
+</head>
+
+<body lang=ZH-CN link=blue vlink=purple style='tab-interval:21.0pt'>
+
+<p style="font-weight: bold;">CreateConfBtnActionImpl.java</p>
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>package
+com.huawei.esdk.csdemo.action.impl;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import
+com.huawei.esdk.csdemo.action.DemoAction;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import
+com.huawei.esdk.csdemo.common.DemoException;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import
+com.huawei.esdk.csdemo.common.ServiceFactory;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import
+com.huawei.esdk.csdemo.convert.ConferenceServiceConvert;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import
+com.huawei.esdk.uc.professional.local.bean.ConferenceInfo;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import
+com.huawei.esdk.uc.professional.local.bean.UCSDKResponse;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import
+com.huawei.esdk.uc.professional.local.conference.ConferenceServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>public
+class CreateConfBtnActionImpl implements DemoAction</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>{</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+@Override</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+public void executeNativeMethod()</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+{</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//</span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>初始化会议接口服务，该服务中包含会议管理的相关接口</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ConferenceServiceEx conferenceServiceEx = ServiceFactory.getInstance().getConferenceServiceEx();</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//</span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>设置入参</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ConferenceInfo conferenceInfo = new ConferenceInfo();</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//</span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>从面板中拿到所有参数</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+try</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ConferenceServiceConvert.getParametersFromConferenceInfoFrame(conferenceInfo);</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;}</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+catch (DemoException e)</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//</span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>界面上输入参数类型错误时，显示错误信息</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ConferenceServiceConvert.showConvertErrInfo(e.getErrInfo());</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+return;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//</span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>返回创建会议结果，</span><span lang=EN-US style='font-size:11.0pt;font-family:
+Consolas;color:black;layout-grid-mode:both'>result</span><span
+style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:both'>包含错误码及创建会议信息</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+UCSDKResponse&lt;String&gt; result =
+conferenceServiceEx.createConf(conferenceInfo);</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//</span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>把返回结果渲染到面板中</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ConferenceServiceConvert.showResultInFrame(result);</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+}</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>}</span></p>
+
+</div>
+
+<p style="font-weight: bold;">ServiceFactory.java</p>
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>package&nbsp;
+com.huawei.esdk.csdemo.common;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import&nbsp;
+com.huawei.esdk.ivs.professional.local.ServiceFactoryEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import&nbsp;
+com.huawei.esdk.uc.professional.local.conference.ConferenceServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import&nbsp;
+com.huawei.esdk.uc.professional.local.call.CallServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>import&nbsp;
+com.huawei.esdk.uc.professional.local.im.IMServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>public&nbsp;
+class ServiceFactory {</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+//native</span><span style='font-size:11.0pt;font-family:宋体;color:black;
+layout-grid-mode:both'>服务单例</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; private&nbsp; 
+static ServiceFactory instance;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; </span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; //
+</span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>CTD模块服务接口</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; private&nbsp; 
+CallServiceEx callServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; </span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; //
+</span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>CTC模块服务接口</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; private&nbsp; 
+ConferenceServiceEx conferenceServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+// </span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>IM模块服务接口</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; private&nbsp;
+IMServiceEx imServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; </span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; private&nbsp;
+ServiceFactory()</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; {</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+// </span><span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:
+both'>从</span><span lang=EN-US style='font-size:11.0pt;font-family:Consolas;
+color:black;layout-grid-mode:both'>native</span><span style='font-size:11.0pt;
+font-family:宋体;color:black;layout-grid-mode:both'>包中</span>
+<span lang=EN-US style='font-size:11.0pt;font-family:Consolas;
+color:black;layout-grid-mode:both'>ServiceFactoryEx</span>
+<span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:both'>类中获取相应的服务</span>
+<span lang=EN-US style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:
+both'> </span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+callServiceEx = ServiceFactoryEx.getService(CallServiceEx.class);</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+alarmManagerServiceEx =
+conferenceServiceEx = ServiceFactoryEx.getService(ConferenceServiceEx.class);</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+imServiceEx = ServiceFactoryEx.getService(IMServiceEx.class);</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; }</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; </span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; //</span>
+<span style='font-size:11.0pt;font-family:宋体;color:black;layout-grid-mode:both'>获取</span><span
+lang=EN-US style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:
+both'>native</span><span style='font-size:11.0pt;font-family:宋体;color:black;
+layout-grid-mode:both'>服务单例</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; public&nbsp;
+static ServiceFactory getInstance()</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; {</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(null
+== instance)</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; instance
+= new ServiceFactory();</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return&nbsp;
+instance;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp; }</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+public CallServiceEx getCallServiceEx()</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+{</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+return callServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+}</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+public ConferenceServiceEx getConferenceServiceEx()</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+{</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+return conferenceServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+}</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+public IMServiceEx getIMServiceEx()</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+{</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+return imServiceEx;</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>&nbsp;&nbsp;&nbsp;
+}</span></p>
+
+<p class=MsoNormal style='line-height:normal'><span lang=EN-US
+style='font-size:11.0pt;font-family:Consolas;color:black;layout-grid-mode:both'>}</span></p>
+
+
+</div>
+
+</body>
+
+</html>

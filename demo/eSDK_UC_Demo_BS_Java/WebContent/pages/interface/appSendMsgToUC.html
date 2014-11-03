@@ -1,0 +1,135 @@
+<ul class="block">
+	<li>
+		<div id="appSendMsgToUC_desc" class="description_div">
+			<!-- append description -->
+		</div>
+	</li>
+</ul>
+<ul>
+	<li>
+		<div id="appSendMsgToUC_execution">
+			<!-- append execution code -->
+		</div>
+	</li>
+</ul>
+<ul>
+	<li>
+		<div id="appSendMsgToUC_src" class="sourcecode_div">
+			<!-- append source code -->
+		</div>
+	</li>
+</ul>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : "/eSDK_UC_Demo_BS_Java/pages/description/appSendMsgToUC_desc.html",
+			async : false,
+			success : function(data) {
+				$("#appSendMsgToUC_desc").html(data);
+			}
+		});
+		
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : "/eSDK_UC_Demo_BS_Java/pages/execution/appSendMsgToUC_execution.html",
+			async : false,
+			success : function(data) {
+				$("#appSendMsgToUC_execution").html(data);
+			}
+		});
+		
+		$.ajax({
+			type : "get",
+			cache : false,
+			url : "/eSDK_UC_Demo_BS_Java/pages/sourcecode/appSendMsgToUC_src.html",
+			async : false,
+			success : function(data) {
+				$("#appSendMsgToUC_src").html(data);
+			}
+		});
+	});
+	
+	function appSendMsgToUC()
+	{
+		//清空信息
+		$("#appSendMsgToUC_resultCode").val("");
+		$("#appSendMsgToUC_status").html("");
+		$("#sendNumberErrTip").html("");
+		$("#ucAccountErrTip").html("");
+		$("#messageErrTip").html("");
+		
+		var sendNumber = $("#sendNumber").val();
+		var ucAccount = $("#ucAccount").val();
+		var message = $("#message").val();
+	
+		 //对消息编码
+		//var resultMessage = encode(message);
+		//alert(""+resultMessage);
+		
+		// 简单参数校验(因为加入了默认参考数据，所以不需要非空校验，20140418注释)
+	/*	if (isEmpty(sendNumber))
+		{
+			$("#sendNumberErrTip").html(controller.language.titles["sendNumberNull"]);
+			return false;
+		}
+		if (isEmpty(ucAccount))
+		{
+			$("#ucAccountErrTip").html(controller.language.titles["ucAccountNull"]);
+			return false;
+		}
+		if (isEmpty(message))
+		{
+			$("#messageErrTip").html(controller.language.titles["ucMessageNull"]);
+			return false;
+		}
+		*/
+	
+		
+		$.ajax({
+			url : "/eSDK_UC_Demo_BS_Java/base64Servlet",
+			type : "post",
+			dataType : "text",
+			data : {message:message,method:"encodeBase64"},
+			async : false,
+			success : function(data)
+			{
+				$("#message").val(data);
+				$.ajax({
+					url : "/eSDK_UC_Demo_BS_Java/imServlet",
+					type : "post",
+					dataType : "json",
+					/*data : "sendNumber=" + sendNumber + "&ucAccount=" + ucAccount + "&message=" + data + "&method=appSendMsgToUC",*/
+					data : {sendNumber:sendNumber ,ucAccount:ucAccount,message:data,method:"appSendMsgToUC"},
+					async : false,
+					success : function(data)
+					{
+						$("#appSendMsgToUC_resultCode").val(data);
+						
+						if (0 == data)
+						{
+							$("#appSendMsgToUC_status").html(controller.language.titles["operationSuccess"]);
+						}
+						else
+						{
+							$("#appSendMsgToUC_status").html(controller.language.titles["operationFailed"]);
+						}
+					},
+					error : function(data)
+					{
+						var res = data1.responseText;
+						$("#appSendMsgToUC_resultCode").val("res");
+						$("#appSendMsgToUC_status").html(controller.language.titles["operationFailed"]);
+					},
+					beforeSend : function()
+					{
+						$("#appSendMsgToUC_resultCode").val("");
+					}
+				});
+			}
+		});
+	}
+</script>

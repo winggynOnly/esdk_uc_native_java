@@ -1,0 +1,197 @@
+<a name="top" class="a_anchor_top"></a>
+<label class="description_label" style="font-size:10pt;font-weight: bold; color: #3575B9;" id="interfaceName"></label><br/>
+<label class="description_label" id="createConfInterface"></label>
+<label class="description_label" style="font-size:10pt;font-weight: bold; color: #3575B9;" id="interfaceFunction"></label><br/>
+<label class="description_label" id="createConfDesc"></label>
+<div class="description_input_div">
+	<!-- 输入参数描述 -->
+	<label class="description_label" id="inputParameterDesc"></label>
+	<table class="description_table">
+		<tr style="background-color: #E7E7E7;">
+			<td width="20%"><label id="inputParameterTd"></label></td>
+			<td width="20%"><label id="inputTypeTd"></label></td>
+			<td width="12%"><label id="inputRestrictionTd"></label></td>
+			<td width="48%"><label id="inputDescriptionTd"></label></td>
+		</tr>
+		<tr>
+			<td>confInfo</td>
+			<td><a class="a_anchor" href="#ConferenceInfo" name="topConferenceInfo">ConferenceInfo</a></td>
+			<td>1</td>
+			<td><label id="confInfoInputTd"></label></td>
+		</tr>
+	</table>
+</div>
+
+<div class="description_output_div">
+	<!-- ConferenceInfo描述 -->
+	<div class="left">
+		<label class="description_label"><a name="ConferenceInfo">ConferenceInfo:</a></label>
+	</div>
+	<div>
+		<a href="#topConferenceInfo"><img class="back_img" src="/eSDK_UC_Demo_BS_Java/pic/back.png"></a>
+	</div>
+	<table class="description_table">
+		<tr style="background-color: #E7E7E7;">
+			<td width="20%"><label id="inputParameterTd"></label></td>
+			<td width="20%"><label id="inputTypeTd"></label></td>
+			<td width="12%"><label id="inputRestrictionTd"></label></td>
+			<td width="48%"><label id="inputDescriptionTd"></label></td>
+		</tr>
+		<tr>
+			<td>confType</td>
+			<td>String</td>
+			<td>1</td>
+			<td><label id="confTypeInputTd"></td>
+		</tr>
+		<tr>
+			<td>subject</td>
+			<td>String</td>
+			<td>1</td>
+			<td><label id="confSubjectInputTd"></td>
+		</tr>
+		<tr>
+			<td>initiator</td>
+			<td>String</td>
+			<td>1</td>
+			<td><label id="initiatorConfInputTd"></td>
+		</tr>
+		<tr>
+			<td>beginTime</td>
+			<td>String</td>
+			<td>1</td>
+			<td><label id="beginTimeInputTd"></td>
+		</tr>
+		<tr>
+			<td>endTime</td>
+			<td>String</td>
+			<td>1</td>
+			<td><label id="endTimeInputTd"></td>
+		</tr>
+		<tr>
+			<td>chairman</td>
+			<td><a class="a_anchor" href="#ConfUser" name="topConfUser">ConfUser</a></td>
+			<td>1</td>
+			<td><label id="ConfUserInputTd"></td>
+		</tr>
+		<tr>
+			<td>confUsers</td>
+			<td>List&lt<a class="a_anchor" href="#ConfUser">ConfUser</a>&gt</td>
+			<td>0..n</td>
+			<td><label id="ConfUsersInputTd"></td>
+		</tr>
+		<tr>
+			<td>mediaType</td>
+			<td>String</td>
+			<td>1</td>
+			<td><label id="mediaTypeInputTd"></td>
+		</tr>
+		<tr>
+			<td>chairmanPassword</td>
+			<td>String</td>
+			<td>0</td>
+			<td><label id="chairmanPasswordInputTd"></td>
+		</tr>
+		<tr>
+			<td>memberPassword</td>
+			<td>String</td>
+			<td>0</td>
+			<td><label id="memberPasswordInputTd"></td>
+		</tr>
+		<tr>
+			<td>maxAttendee</td>
+			<td>String</td>
+			<td>1</td>
+			<td><label id="maxAttendeeInputTd"></td>
+		</tr>
+	</table>
+</div>
+<div class="description_output_div">
+	<!-- IndexRange描述 -->
+	<div class="left">
+		<label class="description_label"><a name="ConfUser">ConfUser:</a></label>
+	</div>
+	<div>
+		<a href="#topConfUser"><img class="back_img" src="/eSDK_UC_Demo_BS_Java/pic/back.png"></a>
+	</div>
+	<table class="description_table">
+		<tr style="background-color: #E7E7E7;">
+			<td width="20%"><label id="inputParameterTd"></label></td>
+			<td width="20%"><label id="inputTypeTd"></label></td>
+			<td width="12%"><label id="inputRestrictionTd"></label></td>
+			<td width="48%"><label id="inputDescriptionTd"></label></td>
+		</tr>
+		<tr>
+			<td>number</td>
+			<td>String</td>
+			<td>1</td>
+			<td><label id="confUserNumberInputTd"></td>
+		</tr>
+		<tr>
+			<td>name</td>
+			<td>String</td>
+			<td>0</td>
+			<td><label id="confUserNameInputTd"></td>
+		</tr>
+		<tr>
+			<td>account</td>
+			<td>String</td>
+			<td>0</td>
+			<td><label id="confUserAccountInputTd"></td>
+		</tr>
+		<tr>
+			<td>talkMode</td>
+			<td>Integer</td>
+			<td>1</td>
+			<td><label id="confUserTalkModeInputTd"></td>
+		</tr>
+		<tr>
+			<td>status</td>
+			<td>Integer</td>
+			<td>1</td>
+			<td><label id="confUserStatusInputTd"></td>
+		</tr>
+		<tr>
+			<td>isSupportVideo</td>
+			<td>Integer</td>
+			<td>1</td>
+			<td><label id="isSupportVideoInputTd"></td>
+		</tr>
+		<tr>
+			<td>role</td>
+			<td>Integer</td>
+			<td>1</td>
+			<td><label id="confUserRoleInputTd"></td>
+		</tr>
+		<tr>
+			<td>email</td>
+			<td>String</td>
+			<td>0</td>
+			<td><label id="confUserEmailInputTd"></td>
+		</tr>
+	</table>
+</div>
+<div class="description_output_div">
+	<!-- 返回参数描述 -->
+	<label class="description_label" id="outputParameterDesc"></label>
+	<table class="description_table">
+		<tr style="background-color: #E7E7E7;">
+			<td width="20%"><label id="outputParameterTd"></label></td>
+			<td width="20%"><label id="outputTypeTd"></label></td>
+			<td width="12%"><label id="outputRestrictionTd"></label></td>
+			<td width="48%"><label id="outputDescriptionTd"></label></td>
+		</tr>
+		<tr>
+			<td>resultCode</td>
+			<td>Integer</td>
+			<td>1</td>
+			<td><label id="resultCodeTd"></td>
+		</tr>
+		<tr>
+			<td>confId</td>
+			<!-- 使用锚点连接跳转 -->
+			<td>String</td>
+			<td>1</td>
+			<td><label id="confIdOutputTd"></td>
+		</tr>
+	</table>
+</div>

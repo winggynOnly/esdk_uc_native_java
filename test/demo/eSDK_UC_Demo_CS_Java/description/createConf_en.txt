@@ -1,0 +1,671 @@
+<html>
+
+<head>
+</head>
+
+<body style="width:100%;">
+<p style="font-weight: bold;">createConf is used to initiate a conference</p>
+
+<div>
+
+
+<p style="font-weight: bold;">input parameters description:</p>
+
+<table border="1"  style="width:100%;">
+ <thead style='background-color: #E7E7E7;'>
+  <tr>
+   <td width="16%" valign=top >
+   <p ><span style='font-family:黑体'>parameters</span></p>
+   </td>
+   <td width="16%" valign=top >
+   <p ><span style='font-family:黑体'>type</span></p>
+   </td>
+   <td width="15%" valign=top >
+   <p ><span style='font-family:黑体'>restriction</span></p>
+   </td>
+   <td width="51%" valign=top >
+   <p ><span style='font-family:黑体'>description</span></p>
+   </td>
+  </tr>
+ </thead>
+ <tr>
+  <td width="16%" valign=top >
+  <p ><span >confInfo</span></p>
+  </td>
+  <td width="16%" valign=top >
+  <p ><span >ConferenceInfo</span></p>
+  </td>
+  <td width="15%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+   <td width="15%" valign=top >
+  <p ><span >Ready to create a conference parameters</span></p>
+  </td>
+ </tr>
+</table>
+
+<p style="font-weight: bold;">ConferenceInfo</p>
+
+	<table border="1"  style="width:100%;">
+ <thead style='background-color: #E7E7E7;'>
+  <tr>
+   <td width="10%" valign=top >
+   <p ><span style='font-family:黑体'>parameters</span></p>
+   </td>
+   <td width="10%" valign=top >
+   <p ><span style='font-family:黑体'>type</span></p>
+   </td>
+   <td width="10%" valign=top >
+   <p ><span style='font-family:黑体'>restriction</span></p>
+   </td>
+   <td width="70%" valign=top >
+   <p ><span style='font-family:黑体'>description</span></p>
+   </td>
+  </tr>
+ </thead>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >confId</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Conference ID</span></p>
+  <p ><span >When you create a conference that does not have to input parameters, only as a query Meeting Information</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >confType</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String </span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span > Meeting Type:
+1: Instant Meeting
+2: Reservation
+3: The need to set aside an instant meeting multimedia resources
+4: You need to reserve an appointment meeting multimedia resources
+ </span></p>
+  </td>
+ </tr>
+  <tr>
+  <td width="11%" valign=top >
+  <p ><span >confStatus</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Meeting state:
+0 indicates a successful conference reservation
+1 shows the conference is being created
+2 shows the meeting has been convened
+3 shows the meeting has ended
+4 shows the periodic meetings have been successful appointment
+5 shows the cycle of meetings is being created
+6 shows the periodic meetings have been held
+7 shows the periodic meeting has ended
+8 shows the failure to convene
+9 shows the periodic meetings convened failure
+Description: This parameter is created when the meeting having to enter only as a query meeting information
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >subject</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Conference Theme</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >confAgenda</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >ConfAgenda</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..n</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >List Agenda</span></p>
+  <p ><span >When you create a conference that does not have to input parameters, only as a query Meeting Information</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >initiator</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >UC Conference originator account</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >initiatorName</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Conference initiator name</span></p>
+  <p ><span >When you create a conference that does not have to input parameters, only as a query Meeting Information</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >beginTime</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >dateTime</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Reservation start time (if it is an instant meeting, the property is invalid), formats such as: 2013-06-28T11: 02: 10.000 + 08: 00
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >endTime</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >dateTime</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Reservation end time (if it is an instant meeting, the property is invalid), formats such as: 2013-06-28T11: 02: 10.000 + 08: 00
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >chairman</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >ConfUser</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span>Chairman of the meeting</span>
+<span>Description: This field is required when creating a meeting</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >chairmanUri</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Moderator URI
+The format sip: user number + @ + enterprise branch region domain name, such as sip: 244008@site1.bird.com
+</span>
+<span>Description: When you create a meeting without entering the parameter</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >confUser</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >ConfUser</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..n</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span>Council member list
+Description:
+Instant Meeting (confType = 1,3), does not support this field. Instant Meeting originator host the meeting after receiving notice of success, and then add a call participant interface addIntoConf increase Council.
+When you create a meeting, make an appointment meeting (confType = 2,4) and a member of the greatest value to maxAttendee consistent.
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >isSupportBgMusic</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Whether to start the background sound (not supported)
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >bgMusicId</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span > Conference play background sound ID (remove background audio .wav file name extension)
+0: Do not play the background sound, the background sound ID must be present on the UC system file server audio file ID (not support, fill in the default value of 0)
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >isRecord</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >When you create a meeting whether to start recording:
+0: Do not start recording
+1: Start recording (not support, fill in the default value of 0)
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >mediaType</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Meeting the media type (binary representation for a particular position, said the opening of this function, 0 means that the function is not open):
+The first one: Audio
+Second place: Video
+Third place: data
+Description: Conference media types can be combined, such as 111, said the meeting was audio and video media types plus data, 100 indicates the type of audio conferencing media. Currently only supports 100 and 111.
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >memberPassword</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Ordinary members of the conference password
+Note: The default password length is 9 or 9 above, and the same with the UC system has not reserved conference password. (Instant Meeting not supported)
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >chairmanPassword</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Chairman of the meeting password
+Note: The default password length is 9 or 9 above, and the same with the UC system has not reserved conference password. (Instant Meeting not supported)
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >maxAttendee</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >The maximum number of participants, the largest number of participants can be configured in the database, the default is 480 people or less.
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >isInviteChairman</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >When initiating the meeting, whether the meeting invitation to join Moderator:
+0: no (not filled by default for Reservation required)
+1: The need (an instant meeting need not fill in the default)
+Description: This field is required when creating a non-conference
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >timeZone</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >0..1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Time zone information with the user when creating the meeting, such as: "Asia / Shanghai; GMT + 08: 00" (GMT ie GMT + 08:00 GMT for the time difference and the Chinese mainland, and is not supported)
+</span>
+  </td>
+ </tr>
+</table>
+
+ <p style="font-weight: bold;">ConfUser</p>
+ <table border="1"  style="width:100%;">
+ <thead style='background-color: #E7E7E7;'>
+  <tr>
+   <td width="10%" valign=top >
+   <p ><span style='font-family:黑体'>parameters</span></p>
+   </td>
+   <td width="10%" valign=top >
+   <p ><span style='font-family:黑体'>type</span></p>
+   </td>
+   <td width="10%" valign=top >
+   <p ><span style='font-family:黑体'>restriction</span></p>
+   </td>
+   <td width="70%" valign=top >
+   <p ><span style='font-family:黑体'>description</span></p>
+   </td>
+  </tr>
+ </thead>
+ 
+  <tr>
+  <td width="11%" valign=top >
+  <p ><span >number</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Number of participants, support for UC number, phone number, area code + phone number fixed
+</span>
+  </td>
+ </tr>
+   <tr>
+  <td width="11%" valign=top >
+  <p ><span >name</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >attendee name
+</span>
+  </td>
+ </tr>
+ 
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >account</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >attendee uc account
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >talkMode</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Right speaker:
+0: No speaker right
+1: right speaker
+2: Pending
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >status</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Attendee Status:
+1: Inviting
+2: Invite success
+3: Invitation failed
+4: Hang
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >isSupportVideo</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span > User support video:
+0: Support
+1: Does not support
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >role</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >User roles:
+1: Moderator
+2: ordinary members
+</span>
+  </td>
+ </tr>
+ <tr>
+  <td width="11%" valign=top >
+  <p ><span >email</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Participants Email, as zhangsan@huawei.com
+</span>
+  </td>
+ </tr>
+ </table>
+ 
+ <p style="font-weight: bold;">ConfAgenda</p>
+ <table border="1"  style="width:100%;">
+ <thead style='background-color: #E7E7E7;'>
+  <tr>
+   <td width="10%" valign=top >
+   <p ><span style='font-family:黑体'>parameter</span></p>
+   </td>
+   <td width="10%" valign=top >
+   <p ><span style='font-family:黑体'>type</span></p>
+   </td>
+   <td width="10%" valign=top >
+   <p ><span style='font-family:黑体'>restriction</span></p>
+   </td>
+   <td width="70%" valign=top >
+   <p ><span style='font-family:黑体'>description</span></p>
+   </td>
+  </tr>
+ </thead>
+ 
+  <tr>
+  <td width="11%" valign=top >
+  <p ><span >text</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >Agenda explanation
+</span>
+  </td>
+ </tr>
+   <tr>
+  <td width="11%" valign=top >
+  <p ><span >time</span></p>
+  </td>
+  <td width="11%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="6%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="72%" valign=top >
+  <p ><span >user time
+</span>
+  </td>
+ </tr>
+ </table>
+<p style="font-weight: bold;">output parameters description:</p>
+    <table border="1"  style="width:100%;">
+ <thead style='background-color: #E7E7E7;'>
+  <tr>
+   <td width="16%" valign=top >
+   <p ><span style='font-family:黑体'>parameter</span></p>
+   </td>
+   <td width="16%" valign=top >
+   <p ><span style='font-family:黑体'>type</span></p>
+   </td>
+   <td width="15%" valign=top >
+   <p ><span style='font-family:黑体'>restriction</span></p>
+   </td>
+   <td width="51%" valign=top >
+   <p ><span style='font-family:黑体'>description</span></p>
+   </td>
+  </tr>
+ </thead>
+ <tr>
+  <td width="16%" valign=top >
+  <p ><span >resultCode</span></p>
+  </td>
+  <td width="16%" valign=top >
+  <p ><span >Integer</span></p>
+  </td>
+  <td width="15%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="51%" valign=top >
+  <p ><span >for successful return </span><span >0</span><span
+  >,and failed return other codes</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="16%" valign=top >
+  <p ><span >confId</span></p>
+  </td>
+  <td width="16%" valign=top >
+  <p ><span >String</span></p>
+  </td>
+  <td width="15%" valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width="51%" valign=top >
+  <p ><span >when resultCode is 0,return to the conference logo</span></p>
+  </td>
+ </tr>
+ </tr>
+</table>
+
+
+</div>
+
+</body>
+
+</html>

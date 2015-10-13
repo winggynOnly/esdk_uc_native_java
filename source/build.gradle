@@ -1,11 +1,249 @@
-ext.proGuardConfigFile = "ProguardCfg_Native.cfg"
-ext.repackingPackage = "com.huawei.esdk.uc.professional.local.impl"
-
-
-dependencies {
-	compile ':cxf:2.6.14'
-	compile ':log4j:1.2.16'
-	
-	testCompile ':junit:4.11'
-	testCompile ':hamcrest-core:1.3'
+def rootProjectDir = project.projectDir
+allprojects {
+	// SVN dir is a basic settings
+	ext.svnRootDir=file("$rootProjectDir/../../../..").absolutePath
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//  下面各个域基本相同
+def ProductNameBase = "esdk"
+allprojects {
+	// build Groovy(build.gradle) with support UTF-8
+	tasks.withType(GroovyCompile) { groovyOptions.encoding = "MacRoman" }
+	// build JAVA with support UTF-8
+	tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+	
+	defaultTasks 'clean', 'setTestOff', 'build'
+}
+
+def addDependentProject(proj, cfg, jarOrProjName) {
+	if (proj.rootProject.findProject(jarOrProjName) != null) {
+		 proj.dependencies.add(cfg, this.project(":$jarOrProjName"))
+	} else {
+		proj.dependencies.add(cfg, ":$jarOrProjName")
+	}
+}
+
+subprojects {
+	ext.productName = ProductNameBase
+	ext.buildToolDir = "$svnRootDir/eSDK_Platform_V100R003/trunk/Server/source/esdk_tools/installdisk_builder"
+
+	//internal control variables
+	ext.itl_enableUnitTest = "true"		// 进行单元测试
+
+	ext.configReplace = ""
+	
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+
+
+	// 设置版本库文件目录和外部MAVEN库URL
+	// 如果需要从MAVEN库中下载，请先注释掉本地目录，再打开MAVEN服务器的注释(IEMP的服务器和MAVEN的中心服务器）
+	// 在将第三方库存放到本地目录后，再恢复上面的注释
+	repositories {
+		// 本地库目录
+		flatDir { dirs "$svnRootDir/eSDK_Platform_V100R003/trunk/Server/open_src" }
+		flatDir { dirs "$svnRootDir/eSDK_Platform_V100R003/trunk/Server/open_src/cxf-2.6.14" }
+		flatDir { dirs "$svnRootDir/eSDK_Platform_V100R003/trunk/Server/open_src/httpclient-4.2.3" }
+		flatDir { dirs "$svnRootDir/eSDK_Platform_V100R003/trunk/Server/open_src/restlet-2.2.1" }
+		flatDir { dirs "$svnRootDir/eSDK_Platform_V100R003/trunk/Server/open_src/spring-3.2.8" }
+		flatDir { dirs "$svnRootDir/eSDK_Platform_V100R003/trunk/Server/test" }
+		flatDir { dirs "$svnRootDir/eSDK_Platform_V100R003/trunk/Server/platform/OpenAS/ONIP SOABean OpenAS V300R002C60/OpenAS_Tomcat7/lib" }
+		flatDir { dirs "$svnRootDir/lib_for_business" } // 本地库目录
+	}
+
+	// 向eclipse配置中增加eSDK的外部配置文件目录
+	eclipse.classpath.file {
+		beforeMerged { classpath ->
+			classpath.entries.removeAll { entry -> entry.kind == 'con' && entry.path.startsWith("org.eclipse.jdt.launching.JRE_CONTAINER")}
+			classpath.entries.removeAll { entry -> entry.kind == 'src'}
+		}
+		withXml {
+			def node = it.asNode()
+			File f = project.file("conf")
+			if (f.exists()) {
+				node.appendNode('classpathentry', [kind: 'src', path: 'conf'])
+			}
+		}
+	}
+
+	task createDirs << {
+		sourceSets*.java.srcDirs*.each { it.mkdirs() }
+		sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+		def confDir = project.file("conf")
+		confDir.mkdirs()
+	}
+	
+/////////////////////////////////////////useJavaC这部分主要用于CI//////////////////////////////////////////////////////////////
+	task useJavaC << {
+		compileJava.options.deprecation = true
+		compileJava.options.debug = true
+		compileJava.options.debugOptions.debugLevel = "source,lines,vars"
+		compileJava.options.fork = true
+		compileJava.options.forkOptions.executable = "javac" 
+		compileTestJava.options.deprecation = true
+		compileTestJava.options.debug = true
+		compileTestJava.options.debugOptions.debugLevel = "source,lines,vars"
+		compileTestJava.options.fork = true
+		compileTestJava.options.forkOptions.executable = "javac"
+	}
+	// 打包工程的配置
+	// 打包成的ZIP文件名，在各个需要打包的工程中设置
+	ext.zipFileName = ""
+	// 打包方式
+	// Normal:加载到WEB容器中的普通包
+	// Tool:不加载到WEB容器，作为工具提供
+	// War:以WAR方式打包
+	ext.zipType= "Normal"
+	// 打包的ZIP中包含的工程（路径）。如果没有设置，默认为本工程打包为一个ZIP包。如果多个工程打包到一起，只在一个工程中设置
+	//示例：ext.zipProjectDirs = ['esdk_platform_common', "esdk_platform_interface"]
+	ext.zipProjectDirs= ""
+	
+	// Manifest info of jar
+	ext.packageTitle = ""
+	ext.packageVersion = "1.2.1-snapshot"
+	ext.specialTitle = ""
+	ext.specialVersion = ext.packageVersion
+	ext.implementationVersion = ""
+
+	jar {
+		manifest {
+			attributes("Manifest-Version": "1.0",
+				"Package-Title": project.packageTitle, "Package-Vendor": "Huawei Technologies Co., Ltd.", "Package-Version": project.packageVersion,
+				"Specification-Title": project.specialTitle, "Specification-Version": project.specialVersion,
+				"Implementation-Version": (new Date()).toString())
+		}
+	}
+	
+	test.onlyIf{project.itl_enableUnitTest == "true"}
+		
+	task postBuildStep << {
+		copy {
+			from file('build/libs')
+			into "$svnRootDir/lib_for_business"
+		}
+		/////////////////////////////////////////这两个copy这部分主要用于CI//////////////////////////////////////////////////////////////
+		copy {
+			from file('build/classes')
+			into "bin"
+		}
+		
+		copy {
+			from file('build/resources/main')
+			into "bin"
+		}
+	}
+	
+	// 为build增加将库导到应用库目录的功能
+	build << {
+		tasks["postBuildStep"].execute()
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	// 一些开关量
+	task setTestOff <<{
+		project.itl_enableUnitTest = "false"
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// 支持安装盘制作
+	//　将文件打包为安装盘需要的ZIP包
+	task zipPackage (type:Zip) { from 'build/zipTemp' }
+
+	// 执行需要打包的文件拷贝
+	task zipPackage_Copy(dependsOn:build) << {
+		if (project.zipFileName != "") {
+			zipPackage.archiveName = project.zipFileName + '.zip'
+			if (project.zipProjectDirs != "") {
+				zipProjectDirs.each {String dirName ->
+					println "-->copy files from ../$dirName"
+					copy {
+						//from project.rootProject.findProject("$dirName").file("build/libs")
+						from project.file("../$dirName/build/libs")
+						exclude '**/*.war'
+						into project.file("build/zipTemp/${project.productName}/webcontent/WEB-INF/lib")
+					}
+					copy {
+						from project.file("../$dirName/conf")
+						into project.file("build/zipTemp/${project.productName}/webcontent/conf")
+					}
+					FileTree tree = fileTree("../$dirName/build/libs") { include '**/*.war' }
+					tree.each {File f ->
+						copy {
+							from (zipTree(f)) {
+								exclude '**/servlet-api.jar'
+							}
+							into project.file("build/zipTemp/${project.productName}/webcontent")
+						}
+					}
+				}
+			} else {
+				if (project.zipType =="Normal" ) {
+					println "-->copy files from project " + project.name
+					copy {
+						from project.file("build/libs")
+						exclude '**/*.war'
+						into project.file("build/zipTemp/${project.productName}/webcontent/WEB-INF/lib")
+					}
+					copy {
+						from project.file("conf")
+						into project.file("build/zipTemp/${project.productName}/webcontent/conf")
+					}
+					FileTree tree = fileTree("build/libs") { include '**/*.war' }
+					tree.each {File f ->
+						copy {
+							from (zipTree(f)) {
+								exclude '**/servlet-api.jar'
+							}
+							into project.file("build/zipTemp/${project.productName}/webcontent")
+						}
+					}
+				} else if (project.zipType =="Tool") {
+					println "-->copy files from project " + project.name
+					copy {
+						from project.file("build/libs")
+						into project.file("build/zipTemp/tools")
+					}
+				}
+			}
+		}
+	}
+	def relpaceConfigOfFile = {filePos, config, toBeStr ->
+		//println "configReplace = $filePos $config $toBeStr"
+		FileTree tree = project.fileTree("build/zipTemp/") { include "**/$filePos" }
+		tree.each {File f ->
+			//println "filePath:" + f.absolutePath
+			if (f.isFile()) {
+				copy {
+					from f
+					into project.file("build/tmp")
+				}
+				BufferedReader reader = project.file("build/tmp/" + f.name).newReader('UTF8')
+				BufferedWriter writer = f.newWriter('UTF-8')
+				reader.eachLine { line ->
+					line = line.replaceAll(config){ it = toBeStr}
+					writer.writeLine(line)
+				}
+				writer.close()
+			}
+		}
+	}
+	task modifyConfigBeforeZip(dependsOn:zipPackage_Copy) << {
+		if (project.configReplace != "") {
+			project.configReplace.collate(3, false).each {
+				relpaceConfigOfFile.call(it[0], it[1], it[2])
+			}
+		}
+	}
+	zipPackage.dependsOn zipPackage_Copy, modifyConfigBeforeZip
+	
+	dependencies {
+			testCompile ':junit:4.11'
+			testCompile ':hamcrest-core:1.3'
+			
+			testCompile ':jmockit'
+			testCompile ':jmockit-coverage'
+	}
+}
+
+

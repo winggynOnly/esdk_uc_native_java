@@ -1,7 +1,6 @@
 esdk_uc_native
 ==============
-
-UC
+编译指南
 
 native
 
